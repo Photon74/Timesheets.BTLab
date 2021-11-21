@@ -1,6 +1,5 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
-using System.Threading.Tasks;
 using Timesheets.DAL.Interfaces;
 
 namespace Timesheets.DAL

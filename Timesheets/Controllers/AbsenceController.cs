@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Timesheets.DAL.Entitys;
-using Timesheets.DAL.Interfaces;
 using Timesheets.DTO;
+using Timesheets.Services;
 
 namespace Timesheets.Controllers
 {
@@ -11,50 +9,48 @@ namespace Timesheets.Controllers
     [ApiController]
     public class AbsenceController : ControllerBase
     {
-        private readonly IAbsenceRepository _repository;
-        private readonly IMapper _mapper;
+        private readonly IAbsenceService _service;
 
-        public AbsenceController(IAbsenceRepository repository, IMapper mapper)
+        public AbsenceController(IAbsenceService service)
         {
-            _repository = repository;
-            _mapper = mapper;
+            _service = service;
         }
 
         // GET: api/<AbsenceController>
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return Ok(_repository.GetAllAsync());
+            return Ok(await _service.GetAllAsync());
         }
 
         // GET api/<AbsenceController>/5
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            return Ok(_repository.GetByIdAsync(id));
+            return Ok(await _service.GetByIdAsync(id));
         }
 
         // POST api/<AbsenceController>
         [HttpPost]
-        public IActionResult Post([FromBody] AbsenceDTO absence)
+        public async Task<IActionResult> Post([FromBody] AbsenceDTO absence)
         {
-            _repository.CreateAsync(_mapper.Map<AbsenceEntity>(absence));
+            await _service.CreateAsync(absence);
             return Ok();
         }
 
         // PUT api/<AbsenceController>/5
         [HttpPut("{id}")]
-        public IActionResult Put([FromBody] AbsenceDTO absence)
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] AbsenceDTO absence)
         {
-            _repository.UpdateAsync(_mapper.Map<AbsenceEntity>(absence));
+            await _service.UpdateAsync(id, absence);
             return Ok();
         }
 
         // DELETE api/<AbsenceController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _repository.DeleteAsync(id);
+            await _service.DeleteAsync(id);
             return Ok();
         }
     }

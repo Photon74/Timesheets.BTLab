@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Timesheets.DAL.Entitys;
@@ -56,20 +55,10 @@ namespace Timesheets.DAL.Repositories
             result.Reason = reader.GetInt32(1);
             result.StartDate = reader.GetDateTime(2);
             result.Duration = reader.GetInt32(3);
-            result.Discounted = reader.GetBoolean(4);
+            result.Discounted = reader.GetBoolean(4) == false ? 0 : 1;
             result.Description = reader.GetString(5);
 
             return result;
-
-            //return new AbsenceEntity
-            //{
-            //    Id = reader.GetInt32(0),
-            //    Reason = reader.GetInt32(1),
-            //    StartDate = reader.GetDateTime(2),
-            //    Duration = reader.GetInt32(3),
-            //    Discounted = reader.GetBoolean(4),
-            //    Description = reader.GetString(5),
-            //};
         }
 
         public async Task<IList<AbsenceEntity>> GetAllAsync()
@@ -90,36 +79,27 @@ namespace Timesheets.DAL.Repositories
                     Reason = reader.GetInt32(1),
                     StartDate = reader.GetDateTime(2),
                     Duration = reader.GetInt32(3),
-                    Discounted = reader.GetBoolean(4),
+                    Discounted = reader.GetBoolean(4) == false ? 0 : 1,
                     Description = reader.GetString(5)
                 };
                 responce.Add(a);
-                //responce.Add(new()
-                //{
-                //    Id = reader.GetFieldValue<int>(0),
-                //    Reason = reader.GetFieldValue<int>(1),
-                //    StartDate = reader.GetFieldValue<DateTimeOffset>(2),
-                //    Duration = reader.GetFieldValue<int>(3),
-                //    Discounted = reader.GetBoolean(4),
-                //    Description = reader.GetString(5),
-                //});
             }
             return responce;
         }
 
-        public async Task UpdateAsync(AbsenceEntity entity)
+        public async Task UpdateAsync(int id, AbsenceEntity entity)
         {
             using var connection = _connection.CreateOpenedConnection() as SqlConnection;
             var cmd = connection.CreateCommand();
 
             cmd.CommandText = $"UPDATE absence " +
-                $"SET(" +
+                $"SET " +
                 $"reason = {entity.Reason}, " +
                 $"start_date = '{entity.StartDate:yyyy-MM-dd}', " +
                 $"duration = {entity.Duration}, " +
                 $"discounted = {entity.Discounted}, " +
-                $"description = '{entity.Description}')" +
-                $"WHERE id = {entity.Id}";
+                $"description = '{entity.Description}' " +
+                $"WHERE id = {id}";
 
             await cmd.ExecuteNonQueryAsync();
         }

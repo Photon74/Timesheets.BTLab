@@ -25,6 +25,14 @@ namespace Timesheets
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("MyPolicy",
+            //        builder =>
+            //        {
+            //            builder.WithOrigins("*").AllowAnyMethod().AllowAnyOrigin().AllowAnyHeader();
+            //        });
+            //});
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -52,7 +60,12 @@ namespace Timesheets
 
             app.UseHttpsRedirection();
 
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
             app.UseRouting();
+
+            //app.UseCors("MyPolicy");
 
             app.UseAuthorization();
 

@@ -1,16 +1,22 @@
-const absencesList = document.querySelector('.absences-list');
+var exampleModal = document.getElementById('exampleModal')
+exampleModal.addEventListener('show.bs.modal', function (event) {
 
-let key;
+  // Button that triggered the modal
+    var button = event.relatedTarget
+    
 
-for (key in content) {
-    absencesList.innerHTML += `
-            <div class="card mt-4 col-md-6 bg-light bg-gradient border-primary">
-                <div class="card-body">
-                    <label for="reason">Причина отсутствия</label>
-                    <p class="card-text" id="reason">${content[key].reason}</p>
-                    <a href="#" type="button" class="btn btn-primary btn-sm">Изменить</a>
-                    <a href="#" type="button" class="btn btn-danger btn-sm">Удалить</a>
-                </div>
-        </div>
-    `
-}
+  // Extract info from data-bs-* attributes
+    var recipient = button.getAttribute('data-bs-whatever')
+    
+
+  // If necessary, you could initiate an AJAX request here
+  // and then do the updating in a callback.
+  //
+  // Update the modal's content.
+  var modalTitle = exampleModal.querySelector('.modal-title')
+  var modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+    
+  modalTitle.textContent = 'New message to ' + recipient
+  modalBodyInput.value = recipient
+})

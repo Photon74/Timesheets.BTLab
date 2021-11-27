@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Timesheets.DAL;
 
 namespace Timesheets
 {
@@ -7,6 +8,11 @@ namespace Timesheets
     {
         public static void Main(string[] args)
         {
+            if (!SQLServerConnectionManager.CheckDatabase("timesheets"))
+            {
+                SQLServerConnectionManager.CreateDatabase();
+            }
+
             CreateHostBuilder(args).Build().Run();
         }
 

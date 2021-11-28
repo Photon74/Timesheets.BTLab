@@ -22,7 +22,7 @@ namespace Timesheets.DAL.Repositories
 
             cmd.CommandText = $"INSERT INTO absence (reason, start_date, duration, discounted, description) " +
                 $"VALUES ({entity.Reason}, " +
-                $"'{entity.StartDate:yyyy-MM-dd}', " +
+                $"'{entity.StartDate:dd-MM-yyyy}', " +
                 $"{entity.Duration}, " +
                 $"{entity.Discounted}, " +
                 $"'{entity.Description}')";
@@ -95,7 +95,7 @@ namespace Timesheets.DAL.Repositories
             cmd.CommandText = $"UPDATE absence " +
                 $"SET " +
                 $"reason = {entity.Reason}, " +
-                $"start_date = '{entity.StartDate:yyyy-MM-dd}', " +
+                $"start_date = '{entity.StartDate:dd-MM-yyyy}', " +
                 $"duration = {entity.Duration}, " +
                 $"discounted = {entity.Discounted}, " +
                 $"description = '{entity.Description}' " +

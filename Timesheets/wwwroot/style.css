@@ -1,3 +1,26 @@
-.hidden {
+﻿.hidden {
   display: none;
+}
+
+label {
+    /*display: block;*/
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+input,
+label {
+    margin: .4rem 0;
+}
+
+div {
+}
+
+input:invalid + span:after {
+    content: '✖';
+    padding-left: 5px;
+}
+
+input:valid + span:after {
+    content: '✓';
+    padding-left: 5px;
 }

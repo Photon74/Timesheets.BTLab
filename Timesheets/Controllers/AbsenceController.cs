@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Timesheets.DTO;
 using Timesheets.Services;
@@ -49,7 +48,7 @@ namespace Timesheets.Controllers
 
         // DELETE api/<AbsenceController>/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute]int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             await _service.DeleteAsync(id);
             return Ok();

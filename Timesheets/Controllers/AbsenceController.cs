@@ -49,7 +49,7 @@ namespace Timesheets.Controllers
 
         // DELETE api/<AbsenceController>/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromRoute]int id)
         {
             await _service.DeleteAsync(id);
             return Ok();
